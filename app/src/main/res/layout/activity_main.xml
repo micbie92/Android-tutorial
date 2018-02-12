@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<copter.embi.flythecopter.layout.SkyLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="copter.embi.flythecopter.MainActivity">
+
+    <!--<include layout="@layout/main_menu_view"/>-->
+
+    <fragment android:name="copter.embi.flythecopter.commons.fragments.MainMenuFragment"
+        android:id="@+id/main_menu"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    <!--<fragment android:name="copter.embi.flythecopter.commons.fragments.MainMenuFragment"-->
+        <!--android:id="@+id/game_view"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_width="match_parent" />-->
+
+
+
+</copter.embi.flythecopter.layout.SkyLayout>
