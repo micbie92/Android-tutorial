@@ -10,8 +10,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-import copter.embi.flythecopter.game.objects.RectCopter;
-import copter.embi.flythecopter.game.threads.GameThread;
+import copter.embi.flythecopter.game.object.RectCopter;
+import copter.embi.flythecopter.game.thread.GameThread;
+import copter.embi.flythecopter.manager.ObstacleManager;
 
 /**
  * Created by eMBi on 10.02.2018.
@@ -25,6 +26,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private RectCopter copter;
     private Point copterPoint;
 
+    private ObstacleManager obstacleManager;
+
     public GamePanel(Context context){
         super(context);
 
@@ -34,6 +37,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
         copter = new RectCopter(new Rect(100, 100, 200, 200), Color.rgb(255,0,0));
         copterPoint = new Point(150, 150);
+
+        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
 
         setFocusable(true);
     }
@@ -80,11 +85,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     public void update(){
         copter.update(copterPoint);
+        obstacleManager.update();
     }
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
+        canvas.drawColor(Color.WHITE);
         copter.draw(canvas);
+        obstacleManager.draw(canvas);
     }
 }

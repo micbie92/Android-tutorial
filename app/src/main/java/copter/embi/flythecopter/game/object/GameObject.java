@@ -1,4 +1,4 @@
-package copter.embi.flythecopter.game.objects;
+package copter.embi.flythecopter.game.object;
 
 import android.graphics.Canvas;
 

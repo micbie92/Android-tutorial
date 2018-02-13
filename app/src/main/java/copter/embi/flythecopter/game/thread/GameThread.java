@@ -1,4 +1,4 @@
-package copter.embi.flythecopter.game.threads;
+package copter.embi.flythecopter.game.thread;
 
 import android.graphics.Canvas;
 import android.util.Log;

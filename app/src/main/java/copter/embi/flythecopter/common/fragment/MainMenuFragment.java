@@ -1,4 +1,4 @@
-package copter.embi.flythecopter.commons.fragments;
+package copter.embi.flythecopter.common.fragment;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;

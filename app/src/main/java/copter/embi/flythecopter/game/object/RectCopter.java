@@ -1,4 +1,4 @@
-package copter.embi.flythecopter.game.objects;
+package copter.embi.flythecopter.game.object;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -33,5 +33,9 @@ public class RectCopter implements GameObject {
     public void update(Point point){
         rectangle.set(point.x - rectangle.width()/2, point.y + rectangle.height()/2,
                 point.x+rectangle.width()/2, point.y-rectangle.height()/2);
+    }
+
+    public Rect getRectangle(){
+        return rectangle;
     }
 }
