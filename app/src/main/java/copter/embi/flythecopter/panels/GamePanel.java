@@ -3,6 +3,7 @@ package copter.embi.flythecopter.panels;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.util.Log;
@@ -10,9 +11,11 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
 
-import copter.embi.flythecopter.game.object.RectCopter;
+import copter.embi.flythecopter.common.Constants;
+import copter.embi.flythecopter.game.object.RectPlayer;
 import copter.embi.flythecopter.game.thread.GameThread;
 import copter.embi.flythecopter.manager.ObstacleManager;
+import copter.embi.flythecopter.manager.SceneManager;
 
 /**
  * Created by eMBi on 10.02.2018.
@@ -23,10 +26,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     private static final String TAG = "GamePanel";
 
     private GameThread thread;
-    private RectCopter copter;
-    private Point copterPoint;
-
-    private ObstacleManager obstacleManager;
+    private SceneManager sceneManager;
 
     public GamePanel(Context context){
         super(context);
@@ -34,12 +34,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
 
         thread = new GameThread(getHolder(), this);
-
-        copter = new RectCopter(new Rect(100, 100, 200, 200), Color.rgb(255,0,0));
-        copterPoint = new Point(150, 150);
-
-        obstacleManager = new ObstacleManager(200, 350, 75, Color.BLACK);
-
+        sceneManager = new SceneManager();
         setFocusable(true);
     }
 
@@ -59,7 +54,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         boolean retry = true;
-        while(true){
+        while(retry){
             try {
                 thread.setRunning(false);
                 thread.join();
@@ -72,27 +67,22 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
-
-        switch(event.getAction()){
-            case MotionEvent.ACTION_DOWN:
-            case MotionEvent.ACTION_MOVE:
-                copterPoint.set((int)event.getX(),(int)event.getY());
-        }
-
+        sceneManager.receiveTouch(event);
         return true;
 //        return super.onTouchEvent(event);
     }
 
+
+
     public void update(){
-        copter.update(copterPoint);
-        obstacleManager.update();
+        sceneManager.update();
     }
 
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        canvas.drawColor(Color.WHITE);
-        copter.draw(canvas);
-        obstacleManager.draw(canvas);
+        sceneManager.draw(canvas);
     }
+
+
 }

@@ -61,7 +61,7 @@ public class GameThread extends Thread {
                     }
                 }
             }
-            timeMillis = System.nanoTime() - startTime/1000000;
+            timeMillis = (System.nanoTime() - startTime)/1000000;
             waitTime = targetTime - timeMillis;
             try {
                 if(waitTime > 0){

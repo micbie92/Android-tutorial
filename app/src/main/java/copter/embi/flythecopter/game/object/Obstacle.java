@@ -33,11 +33,8 @@ public class Obstacle implements GameObject{
     @Override
     public void update() {}
 
-    public boolean copterCollide(RectCopter copter){
-        return rectangle.contains(copter.getRectangle().left, copter.getRectangle().top)
-                || rectangle.contains(copter.getRectangle().right, copter.getRectangle().top)
-                || rectangle.contains(copter.getRectangle().left, copter.getRectangle().bottom)
-                || rectangle.contains(copter.getRectangle().right, copter.getRectangle().bottom);
+    public boolean playerCollide(RectPlayer player){
+        return Rect.intersects(rectangle, player.getRectangle()) || Rect.intersects(rectangle2, player.getRectangle());
     }
 
     public Rect getRectangle(){return rectangle;}

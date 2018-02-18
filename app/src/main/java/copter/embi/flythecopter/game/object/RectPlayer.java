@@ -9,12 +9,12 @@ import android.graphics.Rect;
  * Created by eMBi on 10.02.2018.
  */
 
-public class RectCopter implements GameObject {
+public class RectPlayer implements GameObject {
 
     private Rect rectangle;
     private int color;
 
-    public RectCopter(Rect rectangle, int color){
+    public RectPlayer(Rect rectangle, int color){
         this.rectangle = rectangle;
         this.color = color;
     }
