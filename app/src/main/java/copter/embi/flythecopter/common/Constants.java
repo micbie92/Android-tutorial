@@ -11,4 +11,10 @@ public class Constants {
     public static int SCREEN_HEIGHT;
 
     public static Context CURRENT_CONTEXT;
+
+    public static class ObstacleManager {
+        public static int playerGap = 220;
+        public static int obstacleGap = 400;
+        public static int obstacleHeight= 70;
+    }
 }

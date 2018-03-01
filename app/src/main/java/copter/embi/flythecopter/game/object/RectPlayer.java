@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
 
@@ -22,7 +21,6 @@ public class RectPlayer implements GameObject {
     private Rect rectangle;
     private int color;
 
-    private Animation idle;
     private Animation flightLeft;
     private Animation flightRight;
     private AnimationManager animationManager;
@@ -31,16 +29,14 @@ public class RectPlayer implements GameObject {
         this.rectangle = rectangle;
         this.color = color;
 
-        BitmapFactory bf = new BitmapFactory();
-        Bitmap step1Bitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_1);
-        Bitmap step2Bitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_2);
-        Bitmap step3Bitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_3);
-        Bitmap step4Bitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_4);
-        Bitmap step5Bitmap = bf.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_5);
+        Bitmap step1Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_1);
+        Bitmap step2Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_2);
+        Bitmap step3Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_3);
+        Bitmap step4Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_4);
+        Bitmap step5Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_5);
 
-        idle = new Animation(new Bitmap[]{step1Bitmap}, 2);
         flightRight = new Animation(new Bitmap[]{step1Bitmap, step2Bitmap, step3Bitmap, step4Bitmap,
-                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap}, 10.0f);
+                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap}, 0.5f);
 
         Matrix m = new Matrix();
         m.preScale(-1,1);
@@ -51,9 +47,9 @@ public class RectPlayer implements GameObject {
         step5Bitmap = Bitmap.createBitmap(step5Bitmap, 0, 0, step5Bitmap.getWidth(), step5Bitmap.getHeight(), m, false);
 
         flightLeft = new Animation(new Bitmap[]{step1Bitmap, step2Bitmap, step3Bitmap, step4Bitmap,
-                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap}, 10.0f);
+                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap, }, 0.5f);
 
-        animationManager = new AnimationManager(new Animation[]{idle, flightRight, flightLeft});
+        animationManager = new AnimationManager(new Animation[]{flightRight, flightLeft});
     }
 
 
@@ -73,14 +69,12 @@ public class RectPlayer implements GameObject {
     public void update(Point point){
         float oldLeft = rectangle.left;
 
-        rectangle.set(point.x - rectangle.width()/2, point.y + rectangle.height()/2,
-                point.x+rectangle.width()/2, point.y-rectangle.height()/2);
+        rectangle.set(point.x - rectangle.width()/2, point.y - rectangle.height()/2,
+                point.x+rectangle.width()/2, point.y+rectangle.height()/2);
 
         int state = 0;
-        if(rectangle.left-oldLeft > 5){
+        if(rectangle.left-oldLeft<-5){
             state = 1;
-        } else if(rectangle.left-oldLeft<-5){
-            state = 2;
         }
 
         animationManager.playAnimation(state);
