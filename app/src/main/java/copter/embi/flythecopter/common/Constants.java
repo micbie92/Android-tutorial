@@ -12,6 +12,8 @@ public class Constants {
 
     public static Context CURRENT_CONTEXT;
 
+    public static long INIT_TIME;
+
     public static class ObstacleManager {
         public static int playerGap = 220;
         public static int obstacleGap = 400;

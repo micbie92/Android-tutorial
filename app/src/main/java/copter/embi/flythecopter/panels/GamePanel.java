@@ -2,19 +2,13 @@ package copter.embi.flythecopter.panels;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Point;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.SurfaceView;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import copter.embi.flythecopter.common.Constants;
-import copter.embi.flythecopter.game.object.RectPlayer;
 import copter.embi.flythecopter.game.thread.GameThread;
-import copter.embi.flythecopter.manager.ObstacleManager;
 import copter.embi.flythecopter.manager.SceneManager;
 
 /**
@@ -42,6 +36,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         thread = new GameThread(getHolder(), this);
+        Constants.INIT_TIME = System.currentTimeMillis();
         thread.setRunning(true);
         thread.start();
     }
