@@ -18,13 +18,12 @@ import copter.embi.flythecopter.R;
 
 public class SkyLayout extends LinearLayout {
     private Paint paint;
-    private Bitmap bitmap;
 
     public SkyLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         paint = new Paint();
         paint.setStyle(Paint.Style.FILL);
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sky_pattern);
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.sky_pattern);
         paint.setShader(new BitmapShader(bitmap, Shader.TileMode.REPEAT, Shader.TileMode.REPEAT));
         setWillNotDraw(false);
     }

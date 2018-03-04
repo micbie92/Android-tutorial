@@ -28,7 +28,6 @@ public class GameplayScene implements Scene {
     private long gameOverTime;
     private long frameTime;
 
-
     private ObstacleManager obstacleManager;
     private OrientationData orientationData;
 
@@ -93,7 +92,7 @@ public class GameplayScene implements Scene {
 
     @Override
     public void draw(Canvas canvas) {
-        canvas.drawColor(Color.WHITE);
+//        canvas.drawColor(Color.WHITE);
         player.draw(canvas);
         obstacleManager.draw(canvas);
 

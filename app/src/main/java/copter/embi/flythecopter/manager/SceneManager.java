@@ -1,5 +1,6 @@
 package copter.embi.flythecopter.manager;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.view.MotionEvent;
 
@@ -16,10 +17,12 @@ public class SceneManager {
 
     private ArrayList<Scene> scenes= new ArrayList<>();
     public static int ACTIVE_SCENE;
+    private Bitmap background;
 
-    public SceneManager(){
+    public SceneManager(Bitmap background){
         ACTIVE_SCENE=0;
         scenes.add(new GameplayScene());
+        this.background = background;
     }
 
     public void receiveTouch(MotionEvent event){
@@ -31,6 +34,7 @@ public class SceneManager {
     }
 
     public void draw(Canvas canvas){
+        canvas.drawBitmap(background, 0, 0, null);
         scenes.get(ACTIVE_SCENE).draw(canvas);
     }
 }

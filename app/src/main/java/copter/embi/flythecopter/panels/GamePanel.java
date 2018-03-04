@@ -1,12 +1,15 @@
 package copter.embi.flythecopter.panels;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import copter.embi.flythecopter.R;
 import copter.embi.flythecopter.common.Constants;
 import copter.embi.flythecopter.game.thread.GameThread;
 import copter.embi.flythecopter.manager.SceneManager;
@@ -28,7 +31,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         getHolder().addCallback(this);
         Constants.CURRENT_CONTEXT = context;
         thread = new GameThread(getHolder(), this);
-        sceneManager = new SceneManager();
+
+        Bitmap background = BitmapFactory.decodeResource(getResources(), R.drawable.sky_pattern);
+        background = Bitmap.createScaledBitmap(background, Constants.SCREEN_WIDTH, Constants.SCREEN_HEIGHT, true);
+        sceneManager = new SceneManager(background);
         setFocusable(true);
     }
 
@@ -64,7 +70,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     public boolean onTouchEvent(MotionEvent event){
         sceneManager.receiveTouch(event);
         return true;
-//        return super.onTouchEvent(event);
     }
 
 
@@ -78,6 +83,5 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         super.draw(canvas);
         sceneManager.draw(canvas);
     }
-
 
 }
