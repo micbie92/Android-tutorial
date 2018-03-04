@@ -7,6 +7,7 @@ import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
+import copter.embi.flythecopter.GameActivity;
 import copter.embi.flythecopter.common.Constants;
 import copter.embi.flythecopter.game.object.RectPlayer;
 import copter.embi.flythecopter.manager.ObstacleManager;
@@ -23,7 +24,7 @@ public class GameplayScene implements Scene {
     private RectPlayer player;
     private Point playerPoint;
 
-    private boolean movingPlayer = false;
+//    private boolean movingPlayer = false;
     private boolean gameOver = false;
     private long gameOverTime;
     private long frameTime;
@@ -53,7 +54,8 @@ public class GameplayScene implements Scene {
                 Color.BLACK);
         orientationData.newGame();
         gameOver = false;
-        movingPlayer = false;
+        GameActivity.song.seekTo(0);
+//        movingPlayer = false;
     }
 
     @Override
@@ -85,6 +87,7 @@ public class GameplayScene implements Scene {
 
             if(obstacleManager.playerCollide(player)){
                 gameOver = true;
+//                GameActivity.song.stop();
                 gameOverTime = System.currentTimeMillis();
             }
         }
@@ -113,14 +116,14 @@ public class GameplayScene implements Scene {
     public void reciveTouch(MotionEvent event) {
         switch(event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                if(player.getRectangle().contains((int) event.getX(), (int) event.getY())) movingPlayer=true;
+//                if(player.getRectangle().contains((int) event.getX(), (int) event.getY())) movingPlayer=true;
                 if(gameOver && System.currentTimeMillis() - gameOverTime>= 2000) reset();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(movingPlayer) playerPoint.set((int)event.getX(),(int)event.getY());
+//                if(movingPlayer) playerPoint.set((int)event.getX(),(int)event.getY());
                 break;
             case MotionEvent.ACTION_UP:
-                movingPlayer = false;
+//                movingPlayer = false;
                 break;
         }
     }

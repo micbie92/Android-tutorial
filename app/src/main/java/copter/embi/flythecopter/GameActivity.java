@@ -1,6 +1,7 @@
 package copter.embi.flythecopter;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Window;
@@ -10,6 +11,8 @@ import copter.embi.flythecopter.common.Constants;
 import copter.embi.flythecopter.panels.GamePanel;
 
 public class GameActivity extends Activity {
+
+    public static MediaPlayer song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,21 @@ public class GameActivity extends Activity {
         Constants.SCREEN_WIDTH = dm.widthPixels;
         Constants.SCREEN_HEIGHT = dm.heightPixels;
 
+        song = MediaPlayer.create(GameActivity.this, R.raw.music_game);
+        song.setLooping(true);
+        song.start();
         setContentView(new GamePanel(this));
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        song.release();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        song.start();
     }
 }

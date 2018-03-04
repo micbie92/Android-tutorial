@@ -55,9 +55,6 @@ public class RectPlayer implements GameObject {
 
     @Override
     public void draw(Canvas canvas) {
-//        Paint paint = new Paint();
-//        paint.setColor(color);
-//        canvas.drawRect(rectangle, paint);
         animationManager.draw(canvas, rectangle);
     }
 
