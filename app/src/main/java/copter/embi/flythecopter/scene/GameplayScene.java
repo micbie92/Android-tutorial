@@ -5,9 +5,12 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.view.MotionEvent;
 
 import copter.embi.flythecopter.GameActivity;
+import copter.embi.flythecopter.R;
 import copter.embi.flythecopter.common.Constants;
 import copter.embi.flythecopter.game.object.RectPlayer;
 import copter.embi.flythecopter.manager.ObstacleManager;
@@ -25,12 +28,15 @@ public class GameplayScene implements Scene {
     private Point playerPoint;
 
 //    private boolean movingPlayer = false;
-    private boolean gameOver = false;
+    public static boolean gameOver = false;
     private long gameOverTime;
     private long frameTime;
 
     private ObstacleManager obstacleManager;
     private OrientationData orientationData;
+
+    private SoundPool sp;
+    private int crashSoundId;
 
     public GameplayScene(){
         player = new RectPlayer(new Rect(100, 100, 200, 200), Color.rgb(255,0,0));
@@ -44,6 +50,9 @@ public class GameplayScene implements Scene {
         orientationData = new OrientationData();
         orientationData.register();
         frameTime = System.currentTimeMillis();
+
+        sp = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+        crashSoundId = sp.load(Constants.CURRENT_CONTEXT, R.raw.crash, 1);
     }
 
     public void reset(){
@@ -87,9 +96,12 @@ public class GameplayScene implements Scene {
 
             if(obstacleManager.playerCollide(player)){
                 gameOver = true;
+                sp.play(crashSoundId,1,1,0,0,1);
 //                GameActivity.song.stop();
                 gameOverTime = System.currentTimeMillis();
             }
+        } else {
+            player.playCrash();
         }
     }
 

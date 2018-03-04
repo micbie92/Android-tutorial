@@ -72,8 +72,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         return true;
     }
 
-
-
     public void update(){
         sceneManager.update();
     }

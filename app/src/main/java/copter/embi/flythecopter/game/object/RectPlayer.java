@@ -21,8 +21,10 @@ public class RectPlayer implements GameObject {
     private Rect rectangle;
     private int color;
 
+    private int lastState = 0;
     private Animation flightLeft;
     private Animation flightRight;
+    private Animation crash;
     private AnimationManager animationManager;
 
     public RectPlayer(Rect rectangle, int color){
@@ -36,7 +38,7 @@ public class RectPlayer implements GameObject {
         Bitmap step5Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.helicopter_5);
 
         flightRight = new Animation(new Bitmap[]{step1Bitmap, step2Bitmap, step3Bitmap, step4Bitmap,
-                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap}, 0.5f);
+                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap}, 0.5f, true);
 
         Matrix m = new Matrix();
         m.preScale(-1,1);
@@ -47,9 +49,25 @@ public class RectPlayer implements GameObject {
         step5Bitmap = Bitmap.createBitmap(step5Bitmap, 0, 0, step5Bitmap.getWidth(), step5Bitmap.getHeight(), m, false);
 
         flightLeft = new Animation(new Bitmap[]{step1Bitmap, step2Bitmap, step3Bitmap, step4Bitmap,
-                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap, }, 0.5f);
+                step5Bitmap, step4Bitmap, step3Bitmap, step2Bitmap, }, 0.5f, true);
 
-        animationManager = new AnimationManager(new Animation[]{flightRight, flightLeft});
+        Bitmap crash1Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_01);
+        Bitmap crash2Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_02);
+        Bitmap crash3Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_03);
+        Bitmap crash4Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_04);
+        Bitmap crash5Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_05);
+        Bitmap crash6Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_06);
+        Bitmap crash7Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_07);
+        Bitmap crash8Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_08);
+        Bitmap crash9Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_09);
+        Bitmap crash10Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_10);
+        Bitmap crash11Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_11);
+        Bitmap crash12Bitmap = BitmapFactory.decodeResource(Constants.CURRENT_CONTEXT.getResources(), R.drawable.explosion_12);
+        crash = new Animation(new Bitmap[]{crash1Bitmap, crash2Bitmap, crash3Bitmap, crash4Bitmap,
+                crash5Bitmap, crash6Bitmap, crash7Bitmap, crash8Bitmap, crash9Bitmap, crash10Bitmap,
+                crash11Bitmap, crash12Bitmap}, 0.5f, false);
+
+        animationManager = new AnimationManager(new Animation[]{flightRight, flightLeft, crash});
     }
 
 
@@ -69,12 +87,17 @@ public class RectPlayer implements GameObject {
         rectangle.set(point.x - rectangle.width()/2, point.y - rectangle.height()/2,
                 point.x+rectangle.width()/2, point.y+rectangle.height()/2);
 
-        int state = 0;
-        if(rectangle.left-oldLeft<-5){
-            state = 1;
-        }
+        int state = lastState;
+        if(rectangle.left-oldLeft<-1) state = 1;
+        if(rectangle.left-oldLeft>1) state = 0;
+        lastState = state;
 
         animationManager.playAnimation(state);
+        animationManager.update();
+    }
+
+    public void playCrash(){
+        animationManager.playAnimation(2);
         animationManager.update();
     }
 

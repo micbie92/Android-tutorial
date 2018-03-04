@@ -13,13 +13,15 @@ public class Animation {
 
     private Bitmap[] frames;
     private int frameIndex;
+    private boolean loop;
     private boolean isPlaying = false;
 
     private float frameTime;
     private long lastFrame;
 
-    public Animation(Bitmap[] frames, float animTime){
+    public Animation(Bitmap[] frames, float animTime, boolean loop){
         this.frames = frames;
+        this.loop = loop;
         frameIndex=0;
         frameTime = animTime/frames.length;
         lastFrame = System.currentTimeMillis();
@@ -29,7 +31,9 @@ public class Animation {
         if(!isPlaying)  return;
         if(System.currentTimeMillis()-lastFrame > frameTime*1000){
             frameIndex++;
-            frameIndex = frameIndex >= frames.length ? 0 : frameIndex;
+            int lastStep = frames.length-1;
+            if(loop) lastStep = 0;
+            frameIndex = frameIndex >= frames.length ? lastStep : frameIndex;
             lastFrame = System.currentTimeMillis();
         }
     }
